@@ -3,17 +3,19 @@ class Captain < ActiveRecord::Base
   has_many :classifications, through: :boats
 
   def self.catamaran_operators
-    self.includes(:classifications).where(classifications: {name: "Catamaran"})
+    self.joins(:classifications).where(classifications: {name: "Catamaran"})
   end
 
   def self.sailors
-    self.includes(:classifications).where(classifications: { name: 'Sailboat' })
+    self.joins(:classifications).where(classifications: { name: 'Sailboat' }).uniq
   end
 
   def self.talented_seafarers
+    self.where("id IN (?)", self.sailors.pluck(:id) & self.motorboaters.pluck(:id))
   end
 
   def self.non_sailors
+    self.includes(:classifications).where.not(classifications: { name: 'Sailboat' })
   end
 
   def self.my_all
