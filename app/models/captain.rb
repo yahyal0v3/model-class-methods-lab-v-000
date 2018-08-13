@@ -7,7 +7,11 @@ class Captain < ActiveRecord::Base
   end
 
   def self.sailors
-    self.joins(:classifications).where(classifications: { name: 'Sailboat' }).uniq
+    self.joins(:classifications).where(classifications: { name: 'Sailboat' }).distinct
+  end
+
+  def self.motorboaters
+    self.joins(:classifications).where(classifications: { name: 'Motorboat' }).distinct
   end
 
   def self.talented_seafarers
@@ -15,7 +19,7 @@ class Captain < ActiveRecord::Base
   end
 
   def self.non_sailors
-    self.joins(:classifications).where.not(classifications: { name: 'Sailboat' })
+    self.joins(:classifications).where.not(classifications: { name: 'Sailboat' }).distinct
   end
 
   def self.my_all
