@@ -8,15 +8,15 @@ class Boat < ActiveRecord::Base
   end
 
   def self.ship
-   self.where(length >= 20)
+   self.where("length >= 20")
   end
 
   def self.dinghy
-   self.where(length < 20)
+   self.where("length < 20")
   end
 
   def self.last_three_alphabetically
-   self.order(name DESC).limit(3)
+   self.order("name DESC").limit(3)
   end
 
   def self.without_a_captain
@@ -24,9 +24,10 @@ class Boat < ActiveRecord::Base
   end
 
   def self.sailboats
-
+    self.joins(:classifications).where(classifications: {name: "Sailboat"})
   end
 
   def self.with_three_classifications
+    
   end
 end
