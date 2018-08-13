@@ -12,6 +12,10 @@ class Boat < ActiveRecord::Base
   end
 
   def self.dinghy
-   self.where("length >= 20")
+   self.where("length < 20")
+  end
+
+  def self.last_three_alphabetically
+   self.order("name DESC").limit(3)
   end
 end
