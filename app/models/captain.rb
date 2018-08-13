@@ -15,7 +15,7 @@ class Captain < ActiveRecord::Base
   end
 
   def self.non_sailors
-    self.includes(:classifications).where.not(classifications: { name: 'Sailboat' })
+    self.joins(:classifications).where.not(classifications: { name: 'Sailboat' })
   end
 
   def self.my_all
